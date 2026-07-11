@@ -1,0 +1,41 @@
+# lumiox.es — Apache/LiteSpeed (Raiola Networks)
+
+# HTTPS y www → dominio principal
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^(.*)$ https://lumiox.es/$1 [L,R=301]
+
+# Redirecciones de rutas residuales de WordPress
+RedirectMatch 301 ^/feed/?$ https://lumiox.es/
+RedirectMatch 301 ^/comments/feed/?$ https://lumiox.es/
+RedirectMatch 301 ^/wp-json(/.*)?$ https://lumiox.es/
+RedirectMatch 301 ^/xmlrpc\.php$ https://lumiox.es/
+RedirectMatch 301 ^/wp-content(/.*)?$ https://lumiox.es/
+RedirectMatch 301 ^/wp-admin(/.*)?$ https://lumiox.es/
+RedirectMatch 301 ^/page-sitemap1\.xml$ https://lumiox.es/sitemap-index.xml
+RedirectMatch 301 ^/post-sitemap1\.xml$ https://lumiox.es/sitemap-index.xml
+RedirectMatch 301 ^/sitemaps\.xml$ https://lumiox.es/sitemap-index.xml
+
+# Página de error propia
+ErrorDocument 404 /404.html
+
+# Caché: los assets de /_astro/ llevan hash en el nombre → cache inmutable
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 1 hour"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2|webp|jpg|png|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Compresión (LiteSpeed/Apache)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
