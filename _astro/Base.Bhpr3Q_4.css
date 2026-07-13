@@ -4,3 +4,13 @@
 .lx-lang-switch a.lx-lang-active{color:var(--color-primary)}
 .lx-lang-switch a:hover{color:var(--color-light)}
 .lx-lang-sep{color:var(--color-muted2);font-size:12px}
+
+/* --- Animaciones de tarjetas (sección nosotros) --- */
+.lx-anim .lx-reveal{opacity:0;transform:translateY(28px) scale(.98)}
+.lx-anim .lx-reveal.is-in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.lx-anim .lx-card{transition:transform .35s cubic-bezier(.22,1,.36,1),translate .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .35s ease}
+.lx-anim .lx-card:hover{translate:none;transform:translateY(-6px);border-color:#00d4ff40;box-shadow:0 20px 45px -20px rgba(0,212,255,.28),0 12px 34px rgba(0,0,0,.45)}
+.lx-anim .lx-card .rounded-xl,.lx-anim .lx-card .rounded-full{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s ease}
+.lx-anim .lx-card:hover .rounded-xl{transform:scale(1.1) rotate(-4deg);box-shadow:0 0 20px -4px rgba(0,212,255,.4)}
+.lx-anim .lx-card:hover .rounded-full{transform:scale(1.06)}
+@media (prefers-reduced-motion:reduce){.lx-anim .lx-reveal{opacity:1;transform:none}}
